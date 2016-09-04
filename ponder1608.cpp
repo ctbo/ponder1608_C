@@ -47,10 +47,10 @@ void setall(int depth, bool val)
 
 void print_solution(void)
 {
-	for (int i=1; i<= BAGS; ++i)
+	printf("\n");
+	for (int i=BAGS; i>=1 ; --i)
 		printf("%d ", a[i]);
 	printf("\n");
-	exit(0);
 }
 
 
@@ -59,15 +59,18 @@ void run(int depth)
 	if (depth == 0)
 		{
 			print_solution();
+			maxN = a[1] - 1;
 			return;
 		}
 
-	for (a[depth] = (depth == BAGS ? maxN : a[depth+1]-1);
-			 a[depth] >= depth;
-			 --a[depth])
+	for (a[depth] = (depth == BAGS ? 1 : a[depth+1] + 1);
+			 a[depth] <= maxN - depth + 1;
+			 ++a[depth])
 		{
 			if (checkall(depth))
 				{
+					if (depth == BAGS - 2)
+						fprintf(stderr, "(%d, %d, %d .. %d)", a[BAGS], a[BAGS-1], a[BAGS-2], maxN);
 					setall(depth, true);
 					run(depth-1);
 					setall(depth, false);
