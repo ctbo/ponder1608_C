@@ -1,5 +1,7 @@
-// solver for Ponder This August 2016
+// Solver for Ponder This August 2016
+// http://researchweb.watson.ibm.com/haifa/ponderthis/challenges/August2016.html
 // (C) 2016 by Harald Bögeholz
+// See LICENSE file for license information
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,11 +9,14 @@
 const int n_flags = 10000;
 const int BAGS = 10;
 
-bool f[n_flags];
-int a[BAGS+1];
+bool f[n_flags]; // flags for forbidden sums
+int a[BAGS+1];   // solution being constructed (using indexes 1 .. BAGS)
 
 int maxN = 174;
 
+
+/* check if new value at a[depth] and its sums with one or two already
+chosen values is forbidden */
 bool checkall(int depth)
 {
 	int ad = a[depth];
@@ -26,6 +31,8 @@ bool checkall(int depth)
 }
 
 
+/* set forbidden state for value at a[depth| and its sums with one or
+two already chosen values */
 void setall(int depth, bool val)
 {
 	int ad = a[depth];
